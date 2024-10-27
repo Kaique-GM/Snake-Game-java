@@ -13,9 +13,6 @@ public class Tabuleiro extends JFrame {
 
     private JPanel painel;
     private JPanel menu;
-    private JButton iniciarButton;
-    private JButton resetButton;
-    private JButton pauseButton;
     private JTextField placarField;
     private String direcao = "direita";
     private long tempoAtualizacao = 10;
@@ -28,29 +25,33 @@ public class Tabuleiro extends JFrame {
 
         larguraTabuleiro = alturaTabuleiro = 400;
 
+        // Cria a Cobra
         cobra = new Cobra(10, 10, Color.BLACK);
         cobra.setX(larguraTabuleiro / 2);
         cobra.setY(alturaTabuleiro / 2);
 
+        // Cria a Comida
         comida = new Comida(10, 10, Color.red);
         comida.setX(larguraTabuleiro / 2);
         comida.setY(larguraTabuleiro / 2);
 
+        // Configurações
         setTitle("Jogo da Cobrinha");
         setSize(alturaTabuleiro, larguraTabuleiro + 30);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+
         menu = new JPanel();
         menu.setLayout(new FlowLayout());
 
-        iniciarButton = new JButton("Iniciar");
-        resetButton = new JButton("Reiniciar");
-        pauseButton = new JButton("Pausar");
+        JButton playButton = new JButton("Play");
+        JButton resetButton = new JButton("Reiniciar");
+        JButton pauseButton = new JButton("Pausar");
         placarField = new JTextField("Placar: 0");
         placarField.setEditable(false);
 
-        menu.add(iniciarButton);
+        menu.add(playButton);
         menu.add(resetButton);
         menu.add(pauseButton);
         menu.add(placarField);
@@ -72,9 +73,11 @@ public class Tabuleiro extends JFrame {
 
         setVisible(true);
 
+        //////////////////////////////////////// Funções dos Botões///////////////////////////////////////////////
+
         // ActionListener para o botão Iniciar
-        iniciarButton.addActionListener(e -> {
-            Iniciar();
+        playButton.addActionListener(e -> {
+            Play();
             painel.requestFocusInWindow(); // Devolve o foco para o painel
         });
 
@@ -89,31 +92,33 @@ public class Tabuleiro extends JFrame {
             Pausar();
 
         });
+        
 
         painel.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-
-                // Exemplo de uso do campo de Texto placarField
-                placarField.setText("Placar: " + placar++);
-
+                
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
+                    case KeyEvent.VK_A:
                         if (!direcao.equals("direita")) {
                             direcao = "esquerda";
                         }
                         break;
                     case KeyEvent.VK_RIGHT:
+                    case KeyEvent.VK_D:
                         if (!direcao.equals("esquerda")) {
                             direcao = "direita";
                         }
                         break;
                     case KeyEvent.VK_UP:
+                    case KeyEvent.VK_W:
                         if (!direcao.equals("baixo")) {
                             direcao = "cima";
                         }
                         break;
                     case KeyEvent.VK_DOWN:
+                    case KeyEvent.VK_S:
                         if (!direcao.equals("cima")) {
                             direcao = "baixo";
                         }
@@ -123,12 +128,14 @@ public class Tabuleiro extends JFrame {
             }
         });
 
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         painel.setFocusable(true);
         painel.requestFocusInWindow();
 
     }
 
-    private void Iniciar() {
+    private void Play() {
 
         new Thread(() -> {
             while (true) {
