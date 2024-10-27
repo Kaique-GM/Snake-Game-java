@@ -17,7 +17,8 @@ public class Tabuleiro extends JFrame {
     private String direcao = "direita";
     private long tempoAtualizacao = 10;
     private int incremento = 2;
-    private Quadrado comida, cobra;
+    private Cobra cobra;
+    private Comida comida;
     private int larguraTabuleiro, alturaTabuleiro;
     private int placar = 0;
 
@@ -25,22 +26,21 @@ public class Tabuleiro extends JFrame {
 
         larguraTabuleiro = alturaTabuleiro = 400;
 
-        // Cria a Cobra
-        cobra = new Cobra(10, 10, Color.BLACK);
-        cobra.setX(larguraTabuleiro / 2);
-        cobra.setY(alturaTabuleiro / 2);
-
-        // Cria a Comida
-        comida = new Comida(10, 10, Color.red);
-        comida.setX(larguraTabuleiro / 2);
-        comida.setY(larguraTabuleiro / 2);
-
+        
         // Configurações
         setTitle("Jogo da Cobrinha");
         setSize(alturaTabuleiro, larguraTabuleiro + 30);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Cria a Cobra
+        cobra = new Cobra(10, 10, Color.BLACK);
+        cobra.setX(larguraTabuleiro / 2);
+        cobra.setY(alturaTabuleiro / 2);
+
+        // Cria a Comida e colaca em uma posição aleatoria
+        comida = new Comida(10, 10, Color.red);
+        comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra); 
 
         menu = new JPanel();
         menu.setLayout(new FlowLayout());
