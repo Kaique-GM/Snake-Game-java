@@ -1,4 +1,8 @@
+package ui;
 import javax.swing.*;
+
+import entities.Quadrado;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -24,12 +28,12 @@ public class Tabuleiro extends JFrame {
         larguraTabuleiro = alturaTabuleiro = 400;
 
         cobra = new Quadrado(10, 10, Color.BLACK);
-        cobra.x = larguraTabuleiro / 2;
-        cobra.y = alturaTabuleiro / 2;
+        cobra.setX(larguraTabuleiro / 2);
+        cobra.setY(alturaTabuleiro / 2);
 
         obstaculo = new Quadrado(10, 10, Color.red);
-        obstaculo.x = larguraTabuleiro / 2;
-        obstaculo.y = alturaTabuleiro / 2;
+        obstaculo.setX(larguraTabuleiro / 2);
+        obstaculo.setY(larguraTabuleiro / 2);
 
         setTitle("Jogo da Cobrinha");
         setSize(alturaTabuleiro, larguraTabuleiro + 30);
@@ -54,11 +58,11 @@ public class Tabuleiro extends JFrame {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.setColor(cobra.cor);
-                g.fillRect(cobra.x, cobra.y, cobra.altura, cobra.largura);
+                g.setColor(cobra.getCor());
+                g.fillRect(cobra.getX(), cobra.getY(), cobra.getAltura(), cobra.getLargura());
 
-                g.setColor(obstaculo.cor);
-                g.fillRect(obstaculo.x, obstaculo.y, obstaculo.largura, obstaculo.altura);
+                g.setColor(obstaculo.getCor());
+                g.fillRect(obstaculo.getX(), obstaculo.getY(), obstaculo.getLargura(), obstaculo.getAltura());
             }
         };
 
@@ -136,16 +140,16 @@ public class Tabuleiro extends JFrame {
 
                 switch (direcao) {
                     case "esquerda":
-                        cobra.x -= incremento;
+                        cobra.setX(cobra.getX() - incremento);
                         break;
                     case "direita":
-                        cobra.x += incremento;
+                        cobra.setX(cobra.getX() + incremento);
                         break;
                     case "cima":
-                        cobra.y -= incremento;
+                        cobra.setY(cobra.getY() - incremento);
                         break;
                     case "baixo":
-                        cobra.y += incremento;
+                        cobra.setY(cobra.getY() + incremento) ;
                         break;
 
                 }
