@@ -67,7 +67,7 @@ public class TelaInicial extends JFrame {
 
         // ActionListener para o "botão 1"
         Button1.addActionListener(e -> {
-            new Tabuleiro();
+            new Modo1();
             dispose();
         });
 

@@ -14,11 +14,14 @@ public class Comida extends Quadrado {
 
     // Método para gerar comida aleatoriamente
     public void gerarComida(int larguraTabuleiro, int alturaTabuleiro, Cobra cobra) {
+        int x, y;
         do {
-            int x = random.nextInt(larguraTabuleiro / largura) * largura;
-            int y = random.nextInt(alturaTabuleiro / altura) * altura;
-            setX(x);
-            setY(y);
-        } while (getX() == cobra.getX() && getY() == cobra.getY()); // alterar quando o crescimento da cobra for adicionado
+            x = random.nextInt(larguraTabuleiro / getLargura()) * getLargura();
+            y = random.nextInt(alturaTabuleiro / getAltura()) * getAltura();
+
+        } while (getX() == cobra.getX() && getY() == cobra.getY());// alterar quando o crescimento da cobra for adicionado
+                                                                 
+        setX(x);
+        setY(y);
     }
 }

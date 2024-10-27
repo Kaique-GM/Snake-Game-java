@@ -1,4 +1,5 @@
 package ui;
+
 import javax.swing.*;
 
 import entities.Cobra;
@@ -9,24 +10,24 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Tabuleiro extends JFrame {
+public class Modo1 extends JFrame {
 
-    private JPanel painel;
+    private JPanel tabuleiro;
     private JPanel menu;
     private JTextField placarField;
     private String direcao = "direita";
-    private long tempoAtualizacao = 10;
-    private int incremento = 2;
+    private long tempoAtualizacao = 100;
+    private int incremento = 20;
     private Cobra cobra;
     private Comida comida;
-    private int larguraTabuleiro, alturaTabuleiro;
+    private int larguraTabuleiro, alturaTabuleiro, quadradoXadrez;
     private int placar = 0;
 
-    public Tabuleiro() {
+    public Modo1() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
+        quadradoXadrez = 20;
 
-        
         // Configurações
         setTitle("Jogo da Cobrinha");
         setSize(alturaTabuleiro, larguraTabuleiro + 30);
@@ -34,13 +35,15 @@ public class Tabuleiro extends JFrame {
         setLocationRelativeTo(null);
 
         // Cria a Cobra
-        cobra = new Cobra(10, 10, Color.BLACK);
+        cobra = new Cobra(20, 20, Color.BLACK);
         cobra.setX(larguraTabuleiro / 2);
         cobra.setY(alturaTabuleiro / 2);
 
         // Cria a Comida e colaca em uma posição aleatoria
-        comida = new Comida(10, 10, Color.red);
-        comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra); 
+        comida = new Comida(20, 20, Color.red);
+        comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
+
+        ///////////////////////////////////////////// Menu /////////////////////////////////////////////////////////
 
         menu = new JPanel();
         menu.setLayout(new FlowLayout());
@@ -56,10 +59,17 @@ public class Tabuleiro extends JFrame {
         menu.add(pauseButton);
         menu.add(placarField);
 
-        painel = new JPanel() {
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        ///////////////////////////////////////////// Tabuleiro //////////////////////////////////////////////////
+
+
+        tabuleiro = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                colorirTabuleiro(g);
+
                 g.setColor(cobra.getCor());
                 g.fillRect(cobra.getX(), cobra.getY(), cobra.getAltura(), cobra.getLargura());
 
@@ -69,16 +79,18 @@ public class Tabuleiro extends JFrame {
         };
 
         add(menu, BorderLayout.NORTH);
-        add(painel, BorderLayout.CENTER);
+        add(tabuleiro, BorderLayout.CENTER);
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         setVisible(true);
 
-        //////////////////////////////////////// Funções dos Botões///////////////////////////////////////////////
+        //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
 
         // ActionListener para o botão Iniciar
         playButton.addActionListener(e -> {
             Play();
-            painel.requestFocusInWindow(); // Devolve o foco para o painel
+            tabuleiro.requestFocusInWindow(); // Devolve o foco para o painel
         });
 
         // ActionListener para o botão Reset
@@ -92,12 +104,11 @@ public class Tabuleiro extends JFrame {
             Pausar();
 
         });
-        
 
-        painel.addKeyListener(new KeyAdapter() {
+        tabuleiro.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                
+
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
                     case KeyEvent.VK_A:
@@ -130,8 +141,8 @@ public class Tabuleiro extends JFrame {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        painel.setFocusable(true);
-        painel.requestFocusInWindow();
+        tabuleiro.setFocusable(true);
+        tabuleiro.requestFocusInWindow();
 
     }
 
@@ -157,12 +168,12 @@ public class Tabuleiro extends JFrame {
                         cobra.setY(cobra.getY() - incremento);
                         break;
                     case "baixo":
-                        cobra.setY(cobra.getY() + incremento) ;
+                        cobra.setY(cobra.getY() + incremento);
                         break;
 
                 }
 
-                painel.repaint();
+                tabuleiro.repaint();
 
             }
         }).start();
@@ -176,5 +187,19 @@ public class Tabuleiro extends JFrame {
     private void Pausar() {
         // Interrompe o while(!reset) do método Iniciar() pausando o jogo.
         JOptionPane.showMessageDialog(this, "Jogo Pausado!", "Pause", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    //Metódo para pintar o Tabuleiro
+    private void colorirTabuleiro(Graphics g){
+        for(int i = 0; i < larguraTabuleiro / quadradoXadrez; i++){
+            for(int j = 0; j < alturaTabuleiro / quadradoXadrez; j++){
+                if((i + j) % 2 == 0){
+                    g.setColor(Color.GREEN.brighter());
+                }else{
+                    g.setColor(Color.GREEN.darker());
+                }
+                g.fillRect(i * quadradoXadrez, j * quadradoXadrez, quadradoXadrez, quadradoXadrez);
+            }
+        }
     }
 }

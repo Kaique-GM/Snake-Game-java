@@ -1,4 +1,4 @@
-import ui.Tabuleiro;
+import ui.Modo1;
 import ui.TelaInicial;
 
 public class App {
