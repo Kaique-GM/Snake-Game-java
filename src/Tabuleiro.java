@@ -165,8 +165,4 @@ public class Tabuleiro extends JFrame {
         // Interrompe o while(!reset) do método Iniciar() pausando o jogo.
         JOptionPane.showMessageDialog(this, "Jogo Pausado!", "Pause", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    public static void main(String[] args) {
-        new Tabuleiro();
-    }
 }
