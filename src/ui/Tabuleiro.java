@@ -1,6 +1,8 @@
 package ui;
 import javax.swing.*;
 
+import entities.Cobra;
+import entities.Comida;
 import entities.Quadrado;
 
 import java.awt.*;
@@ -15,11 +17,10 @@ public class Tabuleiro extends JFrame {
     private JButton resetButton;
     private JButton pauseButton;
     private JTextField placarField;
-    private int x, y;
     private String direcao = "direita";
     private long tempoAtualizacao = 10;
     private int incremento = 2;
-    private Quadrado obstaculo, cobra;
+    private Quadrado comida, cobra;
     private int larguraTabuleiro, alturaTabuleiro;
     private int placar = 0;
 
@@ -27,13 +28,13 @@ public class Tabuleiro extends JFrame {
 
         larguraTabuleiro = alturaTabuleiro = 400;
 
-        cobra = new Quadrado(10, 10, Color.BLACK);
+        cobra = new Cobra(10, 10, Color.BLACK);
         cobra.setX(larguraTabuleiro / 2);
         cobra.setY(alturaTabuleiro / 2);
 
-        obstaculo = new Quadrado(10, 10, Color.red);
-        obstaculo.setX(larguraTabuleiro / 2);
-        obstaculo.setY(larguraTabuleiro / 2);
+        comida = new Comida(10, 10, Color.red);
+        comida.setX(larguraTabuleiro / 2);
+        comida.setY(larguraTabuleiro / 2);
 
         setTitle("Jogo da Cobrinha");
         setSize(alturaTabuleiro, larguraTabuleiro + 30);
@@ -61,8 +62,8 @@ public class Tabuleiro extends JFrame {
                 g.setColor(cobra.getCor());
                 g.fillRect(cobra.getX(), cobra.getY(), cobra.getAltura(), cobra.getLargura());
 
-                g.setColor(obstaculo.getCor());
-                g.fillRect(obstaculo.getX(), obstaculo.getY(), obstaculo.getLargura(), obstaculo.getAltura());
+                g.setColor(comida.getCor());
+                g.fillRect(comida.getX(), comida.getY(), comida.getLargura(), comida.getAltura());
             }
         };
 

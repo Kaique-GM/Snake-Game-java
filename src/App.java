@@ -1,9 +1,10 @@
 import ui.Tabuleiro;
+import ui.TelaInicial;
 
 public class App {
     
     public static void main(String[] args) {
-        new Tabuleiro();
+        new TelaInicial();
     }
 }
 
