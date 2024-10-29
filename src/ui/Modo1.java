@@ -39,7 +39,7 @@ public class Modo1 extends JFrame {
         cobra.setX(larguraTabuleiro / 2);
         cobra.setY(alturaTabuleiro / 2);
 
-        // Cria a Comida e colaca em uma posição aleatoria
+        // Cria a Comida e coloca em uma posição aleatoria
         comida = new Comida(20, 20, Color.red);
         comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
 
@@ -51,7 +51,7 @@ public class Modo1 extends JFrame {
         JButton playButton = new JButton("Play");
         JButton resetButton = new JButton("Reiniciar");
         JButton pauseButton = new JButton("Pausar");
-        placarField = new JTextField("Placar: 0");
+        placarField = new JTextField("Placar: 0", 10);
         placarField.setEditable(false);
 
         menu.add(playButton);
@@ -172,6 +172,13 @@ public class Modo1 extends JFrame {
                         break;
 
                 }
+                if(cobra.comeuComida(comida)){
+                    placar++;
+                    placarField.setText("Placar: " + placar);
+
+                    comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
+                    
+                }
 
                 tabuleiro.repaint();
 
@@ -189,6 +196,8 @@ public class Modo1 extends JFrame {
         JOptionPane.showMessageDialog(this, "Jogo Pausado!", "Pause", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+
     //Metódo para pintar o Tabuleiro
     private void colorirTabuleiro(Graphics g){
         for(int i = 0; i < larguraTabuleiro / quadradoXadrez; i++){
@@ -202,4 +211,6 @@ public class Modo1 extends JFrame {
             }
         }
     }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 }

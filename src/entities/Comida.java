@@ -15,12 +15,20 @@ public class Comida extends Quadrado {
     // Método para gerar comida aleatoriamente
     public void gerarComida(int larguraTabuleiro, int alturaTabuleiro, Cobra cobra) {
         int x, y;
+        boolean colisao;
+
         do {
+            // Gera uma posição aleatória para x e y
             x = random.nextInt(larguraTabuleiro / getLargura()) * getLargura();
             y = random.nextInt(alturaTabuleiro / getAltura()) * getAltura();
+            colisao = false;
 
-        } while (getX() == cobra.getX() && getY() == cobra.getY());// alterar quando o crescimento da cobra for adicionado
-                                                                 
+            // Verifica se a nova posição da comida colide com a cabeça da cobra
+            if (x == cobra.getX() && y == cobra.getY()) {
+                colisao = true;
+            }
+        } while (colisao); // Continue até que a nova comida não colida com a cobra
+
         setX(x);
         setY(y);
     }

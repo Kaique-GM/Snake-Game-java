@@ -42,7 +42,7 @@ public class TelaInicial extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0); // Espaçamento entre os botões
 
         // Cria os botões
-        JButton Button1 = new JButton("Iniciar Jogo"); // alterar nome
+        JButton Button1 = new JButton("Easy"); // alterar nome
         JButton sairButton = new JButton("Sair");
 
         // Define o tamanho dos Botões
