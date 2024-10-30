@@ -48,11 +48,14 @@ public class TelaInicial extends JFrame {
         easyButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton sairButton = new JButton("Exit");
         sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton mediumButton = new JButton("Medium");
+        mediumButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
         easyButton.setPreferredSize(tamanhoBotao);
         sairButton.setPreferredSize(tamanhoBotao);
+        mediumButton.setPreferredSize(tamanhoBotao);
 
         // Adiciona os botões ao painel
         gbc.gridx = 0; // Coluna 0
@@ -60,7 +63,10 @@ public class TelaInicial extends JFrame {
         botoesCentro.add(easyButton, gbc);
 
         gbc.gridy = 1; // Linha 1
+        botoesCentro.add(mediumButton, gbc);
+        gbc.gridy = 2; // Linha 2
         botoesCentro.add(sairButton, gbc);
+       
 
         // Adiciona o Painel de Botões no centro da tela
         add(botoesCentro, BorderLayout.CENTER);
@@ -73,6 +79,11 @@ public class TelaInicial extends JFrame {
         // ActionListener para o "botão 1"
         easyButton.addActionListener(e -> {
             new Easy();
+            dispose();
+        });
+
+        mediumButton.addActionListener(e -> {
+            new Medium();
             dispose();
         });
 

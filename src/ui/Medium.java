@@ -11,7 +11,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class Easy extends JFrame implements Game {
+public class Medium extends JFrame implements Game {
 
     private JPanel tabuleiro;
     private JPanel menu;
@@ -27,13 +27,13 @@ public class Easy extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
-    public Easy() {
+    public Medium() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
         quadradoXadrez = 20;
 
         // Configurações
-        setTitle("Sanek Game");
+        setTitle("Snake Game");
         setSize(alturaTabuleiro + 14, larguraTabuleiro + 80);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -199,25 +199,29 @@ public class Easy extends JFrame implements Game {
                     case "esquerda":
                         cobra.setX(cobra.getX() - incremento);
                         if (cobra.getX() < 0) {
-                            cobra.setX(larguraTabuleiro - quadradoXadrez); // Realoca para o lado direito
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
                     case "direita":
                         cobra.setX(cobra.getX() + incremento);
                         if (cobra.getX() >= larguraTabuleiro) {
-                            cobra.setX(0); // Realoca para o lado esquerdo
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
                     case "cima":
                         cobra.setY(cobra.getY() - incremento);
                         if (cobra.getY() < 0) {
-                            cobra.setY(alturaTabuleiro - quadradoXadrez); // Realoca para o lado inferior
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
                     case "baixo":
                         cobra.setY(cobra.getY() + incremento);
                         if (cobra.getY() >= alturaTabuleiro) {
-                            cobra.setY(0); // Realoca para o lado superior
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
 
@@ -317,9 +321,8 @@ public class Easy extends JFrame implements Game {
         }
     }
 
-
-     // Método para ler a fonte
-     private static Font loadFont(String path, float size) {
+    // Método para ler a fonte
+    private static Font loadFont(String path, float size) {
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
