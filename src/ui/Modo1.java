@@ -29,7 +29,7 @@ public class Modo1 extends JFrame {
 
         // Configurações
         setTitle("Jogo da Cobrinha");
-        setSize(alturaTabuleiro + 14, larguraTabuleiro + 34);
+        setSize(alturaTabuleiro + 14, larguraTabuleiro + 73);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -62,15 +62,20 @@ public class Modo1 extends JFrame {
 
         ///////////////////////////////////////////// Tabuleiro //////////////////////////////////////////////////
 
-
         tabuleiro = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 colorirTabuleiro(g);
 
+                // Desenha somente a Cabeça da Cobra
                 g.setColor(cobra.getCor());
                 g.fillRect(cobra.getX(), cobra.getY(), cobra.getAltura(), cobra.getLargura());
+
+                // Desenha o corpo
+                for (Cobra corpoCobra : cobra.getCorpo()) {
+                    g.fillRect(corpoCobra.getX(), corpoCobra.getY(), corpoCobra.getLargura(), corpoCobra.getAltura());
+                }
 
                 g.setColor(comida.getCor());
                 g.fillRect(comida.getX(), comida.getY(), comida.getLargura(), comida.getAltura());
@@ -156,6 +161,9 @@ public class Modo1 extends JFrame {
                     e.printStackTrace();
                 }
 
+                // Move o corpo da cobra
+                cobra.movimentoCorpo();
+
                 switch (direcao) {
                     case "esquerda":
                         cobra.setX(cobra.getX() - incremento);
@@ -171,12 +179,13 @@ public class Modo1 extends JFrame {
                         break;
 
                 }
-                if(cobra.comeuComida(comida)){
+                // Verifica se a Cobra passou por cima da comida
+                if (cobra.comeuComida(comida)) {
                     placar++;
                     placarField.setText("Placar: " + placar);
 
+                    cobra.crescimentoCobra();
                     comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
-                    
                 }
 
                 tabuleiro.repaint();
@@ -197,13 +206,13 @@ public class Modo1 extends JFrame {
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
 
-    //Metódo para pintar o Tabuleiro
-    private void colorirTabuleiro(Graphics g){
-        for(int i = 0; i < larguraTabuleiro / quadradoXadrez; i++){
-            for(int j = 0; j < alturaTabuleiro / quadradoXadrez; j++){
-                if((i + j) % 2 == 0){
+    // Metódo para pintar o Tabuleiro
+    private void colorirTabuleiro(Graphics g) {
+        for (int i = 0; i < larguraTabuleiro / quadradoXadrez; i++) {
+            for (int j = 0; j < alturaTabuleiro / quadradoXadrez; j++) {
+                if ((i + j) % 2 == 0) {
                     g.setColor(Color.GREEN.brighter());
-                }else{
+                } else {
                     g.setColor(Color.GREEN.darker());
                 }
                 g.fillRect(i * quadradoXadrez, j * quadradoXadrez, quadradoXadrez, quadradoXadrez);
