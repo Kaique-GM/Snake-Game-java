@@ -3,17 +3,17 @@ package ui;
 import java.awt.*;
 import javax.swing.*;
 
-public class TelaDerrota extends JFrame {
+public class TelaPause extends JFrame {
     private int larguraTela, alturaTela;
 
-    public TelaDerrota(Game game) {
+    public TelaPause(Game game) {
 
         // Tamanho da tela
         larguraTela = 200;
         alturaTela = 200;
 
         // Configurações
-        setTitle("Perdeu!");
+        setTitle("Pause");
         setSize(alturaTela, larguraTela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza
@@ -25,7 +25,7 @@ public class TelaDerrota extends JFrame {
         JPanel painelTitulo = new JPanel();
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.add(Box.createVerticalStrut(80), BorderLayout.NORTH); // Adiciona espaço
-        JLabel titulo = new JLabel("Você Perdeu :(", JLabel.CENTER);
+        JLabel titulo = new JLabel("Jogo Pausado!", JLabel.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 15)); // Aumenta o tamanho do titulo e troca a fonte
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
@@ -43,21 +43,16 @@ public class TelaDerrota extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0); // Espaçamento entre os botões
 
         // Cria os botões
-        JButton resetButton = new JButton("Reiniciar");
-        JButton sairButton = new JButton("Sair");
+        JButton continueButton = new JButton("Continuar");
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
-        resetButton.setPreferredSize(tamanhoBotao);
-        sairButton.setPreferredSize(tamanhoBotao);
+        continueButton.setPreferredSize(tamanhoBotao);
 
         // Adiciona os botões ao painel
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 0; // Linha 0
-        botoesCentro.add(resetButton, gbc);
-
-        gbc.gridy = 1; // Linha 1
-        botoesCentro.add(sairButton, gbc);
+        botoesCentro.add(continueButton, gbc);
 
         // Adiciona o Painel de Botões no centro da tela
         add(botoesCentro, BorderLayout.CENTER);
@@ -67,14 +62,9 @@ public class TelaDerrota extends JFrame {
         //////////////////////////////////////// Funções dos Botões///////////////////////////////////////////////
 
         // ActionListener para o "botão 1"
-        resetButton.addActionListener(e -> {
-            game.Reiniciar(); // Chama o método reiniciar de qualquer modo de Jogo
+        continueButton.addActionListener(e -> {
+            game.desPausar(); // Chama o método para Despausar de qualquer modo de Jogo
             dispose();
-        });
-
-        // ActionListener para o Botão "Sair"
-        sairButton.addActionListener(e -> {
-            System.exit(0); // Encerra o programa
         });
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////// 

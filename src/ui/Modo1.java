@@ -14,15 +14,16 @@ public class Modo1 extends JFrame implements Game {
     private JPanel tabuleiro;
     private JPanel menu;
     private JTextField placarField;
+    private Cobra cobra;
+    private Comida comida;
     private String direcao = "direita";
     private long tempoAtualizacao = 100;
     private int incremento = 20;
-    private Cobra cobra;
-    private Comida comida;
     private int larguraTabuleiro, alturaTabuleiro, quadradoXadrez;
     private int placar = 0;
     private Thread threadDoJogo;
     private boolean rodando;
+    private boolean jogoPausado;
 
     public Modo1() {
 
@@ -108,7 +109,6 @@ public class Modo1 extends JFrame implements Game {
         // ActionListener para o botão Pausar
         pauseButton.addActionListener(e -> {
             Pausar();
-
         });
 
         tabuleiro.addKeyListener(new KeyAdapter() {
@@ -152,6 +152,9 @@ public class Modo1 extends JFrame implements Game {
 
     }
 
+    //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+
+    // Metódo para iniciar o jogo
     private void Play() {
 
         // Se já está em execução, para a thread atual
@@ -168,6 +171,15 @@ public class Modo1 extends JFrame implements Game {
 
         threadDoJogo = new Thread(() -> {
             while (rodando) {
+                // Se o jogo estiver pausado
+                while (jogoPausado) {
+                    try {
+                        Thread.sleep(100); // Espera enquanto estiver pausado
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 try {
                     Thread.sleep(tempoAtualizacao);
 
@@ -214,6 +226,7 @@ public class Modo1 extends JFrame implements Game {
         threadDoJogo.start(); // Inicia a nova thread
     }
 
+    // Metódo para Reiniciar
     @Override
     public void Reiniciar() {
         rodando = false; // para a execuçao
@@ -246,12 +259,32 @@ public class Modo1 extends JFrame implements Game {
         tabuleiro.requestFocusInWindow();
     }
 
-    private void Pausar() {
-        // Interrompe o while(!reset) do método Iniciar() pausando o jogo.
-        JOptionPane.showMessageDialog(this, "Jogo Pausado!", "Pause", JOptionPane.INFORMATION_MESSAGE);
+    // Metódo para Pausar
+    @Override
+    public void Pausar() {
+        jogoPausado = true; // Pausa o jogo
+        new TelaPause(this); // Chama a tela de pause
     }
 
-    //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+    // Metódo para Despausar
+    @Override
+    public void desPausar() {
+        jogoPausado = true; // True Temporario
+
+        // Aguardar um pequeno delay
+        new Thread(() -> {
+            try {
+                Thread.sleep(500); // Delay de 500 milissegundos
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Após o delay, despausa o jogo
+            jogoPausado = false;
+        }).start();
+
+        tabuleiro.requestFocusInWindow();
+    }
 
     // Metódo para pintar o Tabuleiro
     private void colorirTabuleiro(Graphics g) {
