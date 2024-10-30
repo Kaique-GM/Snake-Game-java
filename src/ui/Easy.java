@@ -8,6 +8,8 @@ import entities.Comida;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class Easy extends JFrame implements Game {
 
@@ -32,7 +34,7 @@ public class Easy extends JFrame implements Game {
 
         // Configurações
         setTitle("Jogo da Cobrinha");
-        setSize(alturaTabuleiro + 14, larguraTabuleiro + 73);
+        setSize(alturaTabuleiro + 14, larguraTabuleiro + 80);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -51,9 +53,12 @@ public class Easy extends JFrame implements Game {
         menu.setLayout(new FlowLayout());
 
         JButton playButton = new JButton("Play");
-        JButton resetButton = new JButton("Reiniciar");
-        JButton pauseButton = new JButton("Pausar");
-        placarField = new JTextField("Placar: 0", 10);
+        playButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton resetButton = new JButton("Restart");
+        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton pauseButton = new JButton("Pause");
+        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        placarField = new JTextField("Score: 0", 10);
         placarField.setEditable(false);
 
         menu.add(playButton);
@@ -193,15 +198,27 @@ public class Easy extends JFrame implements Game {
                 switch (direcao) {
                     case "esquerda":
                         cobra.setX(cobra.getX() - incremento);
+                        if (cobra.getX() < 0) {
+                            cobra.setX(larguraTabuleiro - quadradoXadrez); // Realoca para o lado direito
+                        }
                         break;
                     case "direita":
                         cobra.setX(cobra.getX() + incremento);
+                        if (cobra.getX() >= larguraTabuleiro) {
+                            cobra.setX(0); // Realoca para o lado esquerdo
+                        }
                         break;
                     case "cima":
                         cobra.setY(cobra.getY() - incremento);
+                        if (cobra.getY() < 0) {
+                            cobra.setY(alturaTabuleiro - quadradoXadrez); // Realoca para o lado inferior
+                        }
                         break;
                     case "baixo":
                         cobra.setY(cobra.getY() + incremento);
+                        if (cobra.getY() >= alturaTabuleiro) {
+                            cobra.setY(0); // Realoca para o lado superior
+                        }
                         break;
 
                 }
@@ -297,6 +314,20 @@ public class Easy extends JFrame implements Game {
                 }
                 g.fillRect(i * quadradoXadrez, j * quadradoXadrez, quadradoXadrez, quadradoXadrez);
             }
+        }
+    }
+
+
+     // Método para ler a fonte
+     private static Font loadFont(String path, float size) {
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            return font.deriveFont(size); // Retorna a fonte com o tamanho especificado
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            return new Font("Arial", Font.BOLD, 15); // Fonte padrão se falhar ao carregar
         }
     }
 
