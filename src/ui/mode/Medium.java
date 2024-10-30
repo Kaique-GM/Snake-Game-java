@@ -1,9 +1,14 @@
-package ui;
+package ui.mode;
 
 import javax.swing.*;
 
 import entities.Cobra;
 import entities.Comida;
+import ui.utils.Game;
+import ui.views.TelaDerrota;
+import ui.views.TelaInicial;
+import ui.views.TelaPause;
+import ui.views.TelaPlay;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -11,7 +16,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class Easy extends JFrame implements Game {
+public class Medium extends JFrame implements Game {
 
     private JPanel tabuleiro;
     private JPanel menu;
@@ -27,13 +32,13 @@ public class Easy extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
-    public Easy() {
+    public Medium() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
         quadradoXadrez = 20;
 
         // Configurações
-        setTitle("Sanek Game");
+        setTitle("Snake Game");
         setSize(alturaTabuleiro + 14, alturaTabuleiro + 80);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -156,8 +161,8 @@ public class Easy extends JFrame implements Game {
         new TelaPlay(this);
     }
 
-    // Método para voltar para Home
     @Override
+    // Método para voltar para Home
     public void Home() {
         dispose();
         new TelaInicial();
@@ -204,25 +209,29 @@ public class Easy extends JFrame implements Game {
                     case "esquerda":
                         cobra.setX(cobra.getX() - incremento);
                         if (cobra.getX() < 0) {
-                            cobra.setX(larguraTabuleiro - quadradoXadrez); // Realoca para o lado direito
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
                     case "direita":
                         cobra.setX(cobra.getX() + incremento);
                         if (cobra.getX() >= larguraTabuleiro) {
-                            cobra.setX(0); // Realoca para o lado esquerdo
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
                     case "cima":
                         cobra.setY(cobra.getY() - incremento);
                         if (cobra.getY() < 0) {
-                            cobra.setY(alturaTabuleiro - quadradoXadrez); // Realoca para o lado inferior
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
                     case "baixo":
                         cobra.setY(cobra.getY() + incremento);
                         if (cobra.getY() >= alturaTabuleiro) {
-                            cobra.setY(0); // Realoca para o lado superior
+                            rodando = false;
+                            new TelaDerrota(this);
                         }
                         break;
 

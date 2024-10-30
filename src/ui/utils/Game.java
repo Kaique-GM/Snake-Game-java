@@ -1,4 +1,4 @@
-package ui;
+package ui.utils;
 
 public interface Game {
     void Play();

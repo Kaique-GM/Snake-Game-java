@@ -1,9 +1,14 @@
-package ui;
+package ui.mode;
 
 import javax.swing.*;
 
 import entities.Cobra;
 import entities.Comida;
+import ui.utils.Game;
+import ui.views.TelaDerrota;
+import ui.views.TelaInicial;
+import ui.views.TelaPause;
+import ui.views.TelaPlay;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
