@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Modo1 extends JFrame implements Game {
+public class Easy extends JFrame implements Game {
 
     private JPanel tabuleiro;
     private JPanel menu;
@@ -25,7 +25,7 @@ public class Modo1 extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
-    public Modo1() {
+    public Easy() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
         quadradoXadrez = 20;

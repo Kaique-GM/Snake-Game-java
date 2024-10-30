@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TelaPause extends JFrame {
     private int larguraTela, alturaTela;
@@ -13,7 +15,7 @@ public class TelaPause extends JFrame {
         alturaTela = 200;
 
         // Configurações
-        setTitle("Pause");
+        setTitle("");
         setSize(alturaTela, larguraTela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza
@@ -25,8 +27,10 @@ public class TelaPause extends JFrame {
         JPanel painelTitulo = new JPanel();
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.add(Box.createVerticalStrut(80), BorderLayout.NORTH); // Adiciona espaço
-        JLabel titulo = new JLabel("Jogo Pausado!", JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 15)); // Aumenta o tamanho do titulo e troca a fonte
+
+        JLabel titulo = new JLabel("Paused", JLabel.CENTER);
+        titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
+
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
 
@@ -43,7 +47,11 @@ public class TelaPause extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0); // Espaçamento entre os botões
 
         // Cria os botões
-        JButton continueButton = new JButton("Continuar");
+        JButton continueButton = new JButton("Continue");
+        continueButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton sairButton = new JButton("Exit");
+        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
@@ -53,6 +61,9 @@ public class TelaPause extends JFrame {
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 0; // Linha 0
         botoesCentro.add(continueButton, gbc);
+
+        gbc.gridy = 1; // Linha 1
+        botoesCentro.add(sairButton, gbc);
 
         // Adiciona o Painel de Botões no centro da tela
         add(botoesCentro, BorderLayout.CENTER);
@@ -67,8 +78,31 @@ public class TelaPause extends JFrame {
             dispose();
         });
 
+          // ActionListener para o Botão "Sair"
+          sairButton.addActionListener(e -> {
+            System.exit(0); // Encerra o programa
+        });
+
         /////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
         setVisible(true); // Torna a tela visível
+
     }
+
+    //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+
+    // Método para ler a fonte
+    private static Font loadFont(String path, float size) {
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            return font.deriveFont(size); // Retorna a fonte com o tamanho especificado
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            return new Font("Arial", Font.BOLD, 15); // Fonte padrão se falhar ao carregar
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

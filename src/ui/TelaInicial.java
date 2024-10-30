@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TelaInicial extends JFrame {
 
@@ -12,7 +14,7 @@ public class TelaInicial extends JFrame {
         larguraTabuleiro = alturaTabuleiro = 400;
 
         // Configurações
-        setTitle("Tela Inicial");
+        setTitle("Home");
         setSize(alturaTabuleiro, larguraTabuleiro);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza
@@ -24,8 +26,8 @@ public class TelaInicial extends JFrame {
         JPanel painelTitulo = new JPanel();
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.add(Box.createVerticalStrut(100), BorderLayout.NORTH); // Adiciona espaço
-        JLabel titulo = new JLabel("Bem-vindo ao Jogo da Cobrinha!", JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 15)); // Aumenta o tamanho do titulo e troca a fonte
+        JLabel titulo = new JLabel("Snake Game", JLabel.CENTER);
+        titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
 
@@ -42,18 +44,20 @@ public class TelaInicial extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0); // Espaçamento entre os botões
 
         // Cria os botões
-        JButton Button1 = new JButton("Easy"); // alterar nome
-        JButton sairButton = new JButton("Sair");
+        JButton easyButton = new JButton("Easy");
+        easyButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton sairButton = new JButton("Exit");
+        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
-        Button1.setPreferredSize(tamanhoBotao);
+        easyButton.setPreferredSize(tamanhoBotao);
         sairButton.setPreferredSize(tamanhoBotao);
 
         // Adiciona os botões ao painel
         gbc.gridx = 0; // Coluna 0
         gbc.gridy = 0; // Linha 0
-        botoesCentro.add(Button1, gbc);
+        botoesCentro.add(easyButton, gbc);
 
         gbc.gridy = 1; // Linha 1
         botoesCentro.add(sairButton, gbc);
@@ -67,8 +71,8 @@ public class TelaInicial extends JFrame {
         //////////////////////////////////////// Funções dos Botões///////////////////////////////////////////////
 
         // ActionListener para o "botão 1"
-        Button1.addActionListener(e -> {
-            new Modo1();
+        easyButton.addActionListener(e -> {
+            new Easy();
             dispose();
         });
 
@@ -82,4 +86,21 @@ public class TelaInicial extends JFrame {
 
     }
 
+    //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+
+    // Método para ler a fonte
+    private static Font loadFont(String path, float size) {
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            return font.deriveFont(size); // Retorna a fonte com o tamanho especificado
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            return new Font("Arial", Font.BOLD, 15); // Fonte padrão se falhar ao carregar
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
 }

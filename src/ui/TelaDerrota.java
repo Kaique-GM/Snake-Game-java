@@ -2,6 +2,8 @@ package ui;
 
 import java.awt.*;
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 public class TelaDerrota extends JFrame {
     private int larguraTela, alturaTela;
@@ -9,11 +11,11 @@ public class TelaDerrota extends JFrame {
     public TelaDerrota(Game game) {
 
         // Tamanho da tela
-        larguraTela = 200;
-        alturaTela = 200;
+        larguraTela = 250;
+        alturaTela = 250;
 
         // Configurações
-        setTitle("Perdeu!");
+        setTitle("Wasted");
         setSize(alturaTela, larguraTela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza
@@ -25,8 +27,11 @@ public class TelaDerrota extends JFrame {
         JPanel painelTitulo = new JPanel();
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.add(Box.createVerticalStrut(80), BorderLayout.NORTH); // Adiciona espaço
-        JLabel titulo = new JLabel("Você Perdeu :(", JLabel.CENTER);
-        titulo.setFont(new Font("Arial", Font.BOLD, 15)); // Aumenta o tamanho do titulo e troca a fonte
+
+        JLabel titulo = new JLabel("WASTED", JLabel.CENTER);
+        titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
+        titulo.setForeground(Color.RED);
+
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
 
@@ -43,9 +48,11 @@ public class TelaDerrota extends JFrame {
         gbc.insets = new Insets(0, 0, 5, 0); // Espaçamento entre os botões
 
         // Cria os botões
-        JButton resetButton = new JButton("Reiniciar");
-        JButton sairButton = new JButton("Sair");
-
+        JButton resetButton = new JButton("Restart");
+        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton sairButton = new JButton("Exit");
+        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
         resetButton.setPreferredSize(tamanhoBotao);
@@ -81,4 +88,20 @@ public class TelaDerrota extends JFrame {
 
         setVisible(true); // Torna a tela visível
     }
+
+    //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+
+    // Método para ler a fonte
+    private static Font loadFont(String path, float size) {
+        try {
+            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(font);
+            return font.deriveFont(size); // Retorna a fonte com o tamanho especificado
+        } catch (FontFormatException | IOException e) {
+            e.printStackTrace();
+            return new Font("Arial", Font.BOLD, 15); // Fonte padrão se falhar ao carregar
+        }
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
