@@ -51,9 +51,6 @@ public class Hard extends JFrame implements Game {
 
         menu = new JPanel();
         menu.setLayout(new FlowLayout());
-
-        JButton playButton = new JButton("Play");
-        playButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton resetButton = new JButton("Restart");
         resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton pauseButton = new JButton("Pause");
@@ -61,7 +58,6 @@ public class Hard extends JFrame implements Game {
         placarField = new JTextField("Score: 0", 10);
         placarField.setEditable(false);
 
-        menu.add(playButton);
         menu.add(resetButton);
         menu.add(pauseButton);
         menu.add(placarField);
@@ -97,13 +93,9 @@ public class Hard extends JFrame implements Game {
 
         setVisible(true);
 
-        //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
+        abrirTelaPlay();
 
-        // ActionListener para o botão Iniciar
-        playButton.addActionListener(e -> {
-            Play();
-            tabuleiro.requestFocusInWindow(); // Devolve o foco para o painel
-        });
+        //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
 
         // ActionListener para o botão Reset
         resetButton.addActionListener(e -> {
@@ -158,7 +150,11 @@ public class Hard extends JFrame implements Game {
     }
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
-    
+
+    private void abrirTelaPlay() {
+        new TelaPlay(this);
+    }
+
     @Override
     // Método para voltar para Home
     public void Home() {
@@ -166,8 +162,9 @@ public class Hard extends JFrame implements Game {
         new TelaInicial();
     }
 
+    @Override
     // Metódo para iniciar o jogo
-    private void Play() {
+    public void Play() {
 
         // Se já está em execução, para a thread atual
         if (threadDoJogo != null && rodando) {
