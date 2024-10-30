@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Modo1 extends JFrame {
+public class Modo1 extends JFrame implements Game {
 
     private JPanel tabuleiro;
     private JPanel menu;
@@ -21,6 +21,8 @@ public class Modo1 extends JFrame {
     private Comida comida;
     private int larguraTabuleiro, alturaTabuleiro, quadradoXadrez;
     private int placar = 0;
+    private Thread threadDoJogo;
+    private boolean rodando;
 
     public Modo1() {
 
@@ -152,8 +154,20 @@ public class Modo1 extends JFrame {
 
     private void Play() {
 
-        new Thread(() -> {
-            while (true) {
+        // Se já está em execução, para a thread atual
+        if (threadDoJogo != null && rodando) {
+            rodando = false; // Para o jogo atual
+            try {
+                threadDoJogo.join(); // Aguarda a thread terminar
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        rodando = true;
+
+        threadDoJogo = new Thread(() -> {
+            while (rodando) {
                 try {
                     Thread.sleep(tempoAtualizacao);
 
@@ -179,6 +193,11 @@ public class Modo1 extends JFrame {
                         break;
 
                 }
+                // Verifica se houve colisão da cabeça com o corpo
+                if (cobra.colisao()) {
+                    rodando = false;
+                    new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
+                }
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
@@ -191,12 +210,40 @@ public class Modo1 extends JFrame {
                 tabuleiro.repaint();
 
             }
-        }).start();
+        });
+        threadDoJogo.start(); // Inicia a nova thread
     }
 
-    private void Reiniciar() {
-        // Adicione aqui a lógica para reiniciar o jogo
-        JOptionPane.showMessageDialog(this, "Jogo Reiniciado!", "Reset", JOptionPane.INFORMATION_MESSAGE);
+    @Override
+    public void Reiniciar() {
+        rodando = false; // para a execuçao
+
+        try {
+            if (threadDoJogo != null) {
+                threadDoJogo.join(); // Espera a thread terminar
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Reposiciona a cobra no meio
+        cobra.setX(larguraTabuleiro / 2);
+        cobra.setY(alturaTabuleiro / 2);
+        cobra.getCorpo().clear(); // Limpa a lista que guarda cada pedaço do corpo
+
+        // Gera a comida novamente
+        comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
+
+        // Zera o placar
+        placar = 0;
+        placarField.setText("Placar: " + placar);
+
+        // Reinicializa a direção
+        direcao = "direita";
+
+        Play();
+
+        tabuleiro.requestFocusInWindow();
     }
 
     private void Pausar() {

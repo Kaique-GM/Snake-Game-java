@@ -13,6 +13,10 @@ public class Cobra extends Quadrado {
         super(largura, altura, cor);
     }
 
+    public List<Cobra> getCorpo() {
+        return corpo;
+    }
+
     // Método para verificar se a cobra comeu a comida
     public boolean comeuComida(Comida comida) {
         if (this.getX() == comida.getX() && this.getY() == comida.getY()) {
@@ -53,8 +57,14 @@ public class Cobra extends Quadrado {
         }
     }
 
-    public List<Cobra> getCorpo() {
-        return corpo;
+    //Método para verificar se a cabeça da cobra colide com alguma parte do corpo
+    public boolean colisao(){
+        for(Cobra corpinho : corpo){
+        if(this.getX() == corpinho.getX() && this.getY() == corpinho.getY()){
+            return true;
+        }
+    }
+        return false;
     }
 
 }
