@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import entities.Cobra;
 import entities.Comida;
-import entities.Quadrado;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -30,7 +29,7 @@ public class Modo1 extends JFrame {
 
         // Configurações
         setTitle("Jogo da Cobrinha");
-        setSize(alturaTabuleiro, larguraTabuleiro + 30);
+        setSize(alturaTabuleiro + 14, larguraTabuleiro + 34);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
