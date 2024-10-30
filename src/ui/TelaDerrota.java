@@ -50,12 +50,15 @@ public class TelaDerrota extends JFrame {
         // Cria os botões
         JButton resetButton = new JButton("Restart");
         resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton homeButton = new JButton("Home");
+        homeButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton sairButton = new JButton("Exit");
         sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
         resetButton.setPreferredSize(tamanhoBotao);
+        homeButton.setPreferredSize(tamanhoBotao);
         sairButton.setPreferredSize(tamanhoBotao);
 
         // Adiciona os botões ao painel
@@ -64,6 +67,9 @@ public class TelaDerrota extends JFrame {
         botoesCentro.add(resetButton, gbc);
 
         gbc.gridy = 1; // Linha 1
+        botoesCentro.add(homeButton, gbc);
+
+        gbc.gridy = 2; // Linha 2
         botoesCentro.add(sairButton, gbc);
 
         // Adiciona o Painel de Botões no centro da tela
@@ -76,6 +82,11 @@ public class TelaDerrota extends JFrame {
         // ActionListener para o "botão 1"
         resetButton.addActionListener(e -> {
             game.Reiniciar(); // Chama o método reiniciar de qualquer modo de Jogo
+            dispose();
+        });
+
+        homeButton.addActionListener(e -> {
+            game.Home();
             dispose();
         });
 
