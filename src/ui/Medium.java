@@ -58,6 +58,9 @@ public class Medium extends JFrame implements Game {
         resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton pauseButton = new JButton("Pause");
         pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton homeButton = new JButton("Home");
+        homeButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+
         placarField = new JTextField("Score: 0", 10);
         placarField.setEditable(false);
 
@@ -158,6 +161,13 @@ public class Medium extends JFrame implements Game {
     }
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+
+    @Override
+    // Método para voltar para Home
+    public void Home() {
+        dispose();
+        new TelaInicial();
+    }
 
     // Metódo para iniciar o jogo
     private void Play() {

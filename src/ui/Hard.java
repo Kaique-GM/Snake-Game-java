@@ -158,6 +158,13 @@ public class Hard extends JFrame implements Game {
     }
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
+    
+    @Override
+    // Método para voltar para Home
+    public void Home() {
+        dispose();
+        new TelaInicial();
+    }
 
     // Metódo para iniciar o jogo
     private void Play() {

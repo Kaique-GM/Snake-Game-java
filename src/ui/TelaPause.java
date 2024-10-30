@@ -84,6 +84,11 @@ public class TelaPause extends JFrame {
             dispose();
         });
 
+        homeButton.addActionListener(e -> {
+            game.Home();
+            dispose();
+        });
+
         // ActionListener para o Botão "Sair"
         sairButton.addActionListener(e -> {
             System.exit(0); // Encerra o programa

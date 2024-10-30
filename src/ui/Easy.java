@@ -159,6 +159,13 @@ public class Easy extends JFrame implements Game {
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
 
+    // Método para voltar para Home
+    @Override
+    public void Home() {
+        dispose();
+        new TelaInicial();
+    }
+
     // Metódo para iniciar o jogo
     private void Play() {
 
@@ -317,9 +324,8 @@ public class Easy extends JFrame implements Game {
         }
     }
 
-
-     // Método para ler a fonte
-     private static Font loadFont(String path, float size) {
+    // Método para ler a fonte
+    private static Font loadFont(String path, float size) {
         try {
             Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
