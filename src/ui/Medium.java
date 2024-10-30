@@ -34,7 +34,7 @@ public class Medium extends JFrame implements Game {
 
         // Configurações
         setTitle("Snake Game");
-        setSize(alturaTabuleiro + 14, larguraTabuleiro + 80);
+        setSize(alturaTabuleiro + 14, alturaTabuleiro + 80);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 

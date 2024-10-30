@@ -12,11 +12,11 @@ public class TelaPause extends JFrame {
 
         // Tamanho da tela
         larguraTela = 200;
-        alturaTela = 200;
+        alturaTela = 300;
 
         // Configurações
         setTitle("");
-        setSize(alturaTela, larguraTela);
+        setSize(larguraTela, alturaTela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza
         setLayout(new BorderLayout());
@@ -49,13 +49,16 @@ public class TelaPause extends JFrame {
         // Cria os botões
         JButton continueButton = new JButton("Continue");
         continueButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton homeButton = new JButton("Home");
+        homeButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton sairButton = new JButton("Exit");
         sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
-        
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
         continueButton.setPreferredSize(tamanhoBotao);
+        homeButton.setPreferredSize(tamanhoBotao);
+        sairButton.setPreferredSize(tamanhoBotao);
 
         // Adiciona os botões ao painel
         gbc.gridx = 0; // Coluna 0
@@ -63,6 +66,9 @@ public class TelaPause extends JFrame {
         botoesCentro.add(continueButton, gbc);
 
         gbc.gridy = 1; // Linha 1
+        botoesCentro.add(homeButton, gbc);
+
+        gbc.gridy = 2; // Linha 2
         botoesCentro.add(sairButton, gbc);
 
         // Adiciona o Painel de Botões no centro da tela
@@ -78,8 +84,8 @@ public class TelaPause extends JFrame {
             dispose();
         });
 
-          // ActionListener para o Botão "Sair"
-          sairButton.addActionListener(e -> {
+        // ActionListener para o Botão "Sair"
+        sairButton.addActionListener(e -> {
             System.exit(0); // Encerra o programa
         });
 

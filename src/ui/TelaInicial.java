@@ -15,7 +15,7 @@ public class TelaInicial extends JFrame {
 
         // Configurações
         setTitle("Home");
-        setSize(alturaTabuleiro, larguraTabuleiro);
+        setSize(larguraTabuleiro, alturaTabuleiro);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centraliza
         setLayout(new BorderLayout());
@@ -46,16 +46,19 @@ public class TelaInicial extends JFrame {
         // Cria os botões
         JButton easyButton = new JButton("Easy");
         easyButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
-        JButton sairButton = new JButton("Exit");
-        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton mediumButton = new JButton("Medium");
         mediumButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton hardButton = new JButton("Hard");
+        hardButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        JButton sairButton = new JButton("Exit");
+        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
         easyButton.setPreferredSize(tamanhoBotao);
         sairButton.setPreferredSize(tamanhoBotao);
         mediumButton.setPreferredSize(tamanhoBotao);
+        hardButton.setPreferredSize(tamanhoBotao);
 
         // Adiciona os botões ao painel
         gbc.gridx = 0; // Coluna 0
@@ -64,7 +67,11 @@ public class TelaInicial extends JFrame {
 
         gbc.gridy = 1; // Linha 1
         botoesCentro.add(mediumButton, gbc);
+
         gbc.gridy = 2; // Linha 2
+        botoesCentro.add(hardButton, gbc);
+
+        gbc.gridy = 3; // Linha 3
         botoesCentro.add(sairButton, gbc);
        
 
@@ -86,6 +93,12 @@ public class TelaInicial extends JFrame {
             new Medium();
             dispose();
         });
+
+        hardButton.addActionListener(e -> {
+            new Hard();
+            dispose();
+        });
+
 
         // ActionListener para o Botão "Sair"
         sairButton.addActionListener(e -> {
