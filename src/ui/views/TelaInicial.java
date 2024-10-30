@@ -30,7 +30,7 @@ public class TelaInicial extends JFrame {
         ////////////////////////////////////////// Background /////////////////////////////////////////////////////
 
         // Cria o painel de fundo
-        BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/teste3.jpeg");
+        BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/Background.jpeg");
         setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
