@@ -6,6 +6,7 @@ import javax.swing.*;
 import ui.mode.Easy;
 import ui.mode.Hard;
 import ui.mode.Medium;
+import ui.utils.BackgroundPanel;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,23 +26,35 @@ public class TelaInicial extends JFrame {
         setLocationRelativeTo(null); // Centraliza
         setLayout(new BorderLayout());
 
+
+        ////////////////////////////////////////// Background /////////////////////////////////////////////////////
+
+        // Cria o painel de fundo
+        BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/teste3.jpeg");
+        setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         /////////////////////////////////////////// Titulo ///////////////////////////////////////////////////////
 
         // Cria e adiciona um painel para o Titulo da Tela inicial
         JPanel painelTitulo = new JPanel();
+        painelTitulo.setOpaque(false);
         painelTitulo.setLayout(new FlowLayout());
-        painelTitulo.add(Box.createVerticalStrut(100), BorderLayout.NORTH); // Adiciona espaço
+        painelTitulo.add(Box.createVerticalStrut(102), BorderLayout.NORTH); // Adiciona espaço
         JLabel titulo = new JLabel("Snake Game", JLabel.CENTER);
         titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
+        titulo.setForeground(Color.white);
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         ////////////////////////////////////////// Painel Centro /////////////////////////////////////////////////
 
         // Cria painel no centro com botões
         JPanel botoesCentro = new JPanel();
+        botoesCentro.setOpaque(false); // Tornar o painel transparente
         botoesCentro.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
