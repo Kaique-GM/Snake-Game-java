@@ -7,6 +7,8 @@ import ui.mode.Easy;
 import ui.mode.Hard;
 import ui.mode.Medium;
 import ui.utils.BackgroundPanel;
+import ui.utils.ShadowLabel;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -41,8 +43,8 @@ public class TelaInicial extends JFrame {
         JPanel painelTitulo = new JPanel();
         painelTitulo.setOpaque(false);
         painelTitulo.setLayout(new FlowLayout());
-        painelTitulo.add(Box.createVerticalStrut(102), BorderLayout.NORTH); // Adiciona espaço
-        JLabel titulo = new JLabel("Snake Game", JLabel.CENTER);
+        painelTitulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 80, 0)); // Adiciona espaço no topo
+        ShadowLabel titulo = new ShadowLabel("Snake Game", JLabel.CENTER);
         titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
         titulo.setForeground(Color.white);
         painelTitulo.add(titulo, BorderLayout.NORTH);
