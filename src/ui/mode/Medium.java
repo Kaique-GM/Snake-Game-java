@@ -244,7 +244,7 @@ public class Medium extends JFrame implements Game {
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
-                    placarField.setText("Placar: " + placar);
+                    placarField.setText("Score: " + placar);
 
                     cobra.crescimentoCobra();
                     comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
@@ -280,7 +280,7 @@ public class Medium extends JFrame implements Game {
 
         // Zera o placar
         placar = 0;
-        placarField.setText("Placar: " + placar);
+        placarField.setText("Score: " + placar);
 
         // Reinicializa a direção
         direcao = "direita";

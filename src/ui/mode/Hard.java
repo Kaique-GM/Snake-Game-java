@@ -243,7 +243,7 @@ public class Hard extends JFrame implements Game {
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
-                    placarField.setText("Placar: " + placar);
+                    placarField.setText("Score: " + placar);
 
                     tempoAtualizacao -= 2;
                     if (tempoAtualizacao < 50) {
@@ -284,7 +284,7 @@ public class Hard extends JFrame implements Game {
 
         // Zera o placar
         placar = 0;
-        placarField.setText("Placar: " + placar);
+        placarField.setText("Score: " + placar);
 
         // Reinicializa a direção
         direcao = "direita";
