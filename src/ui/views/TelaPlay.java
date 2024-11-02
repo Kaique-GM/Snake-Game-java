@@ -3,6 +3,9 @@ package ui.views;
 import java.awt.*;
 import javax.swing.*;
 
+import ui.mode.Easy;
+import ui.mode.Hard;
+import ui.mode.Medium;
 import ui.utils.BackgroundPanel;
 import ui.utils.Game;
 import ui.utils.ShadowLabel;
@@ -27,10 +30,20 @@ public class TelaPlay extends JFrame {
         setLayout(new BorderLayout());
 
         ////////////////////////////////////////// Background /////////////////////////////////////////////////////
-
-        // Cria o painel de fundo
-        BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/displays.jpg");
-        setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        
+        // Verifica de Qual instancia é o game
+        if (game instanceof Easy) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/easy.jpg");
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        } 
+        if(game instanceof Medium) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/medium.jpg");
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        }
+        if(game instanceof Hard) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/hard.jpg");
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

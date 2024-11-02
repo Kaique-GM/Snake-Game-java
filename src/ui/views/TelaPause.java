@@ -3,6 +3,9 @@ package ui.views;
 import java.awt.*;
 import javax.swing.*;
 
+import ui.mode.Easy;
+import ui.mode.Hard;
+import ui.mode.Medium;
 import ui.utils.BackgroundPanel;
 import ui.utils.Game;
 import ui.utils.ShadowLabel;
@@ -26,11 +29,21 @@ public class TelaPause extends JFrame {
         setLocationRelativeTo(null); // Centraliza
         setLayout(new BorderLayout());
 
-         ////////////////////////////////////////// Background /////////////////////////////////////////////////////
+        ////////////////////////////////////////// Background /////////////////////////////////////////////////////
 
-        // Cria o painel de fundo
-        BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/displays.jpg");
-        setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        // Verifica de Qual instancia é o game
+        if (game instanceof Easy) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/easy.jpg");
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        }
+        if (game instanceof Medium) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/medium.jpg");
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        }
+        if (game instanceof Hard) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/hard.jpg");
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -41,7 +54,6 @@ public class TelaPause extends JFrame {
         painelTitulo.setOpaque(false);
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.add(Box.createVerticalStrut(80), BorderLayout.NORTH); // Adiciona espaço
-        
 
         ShadowLabel titulo = new ShadowLabel("Paused", JLabel.CENTER);
         titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
