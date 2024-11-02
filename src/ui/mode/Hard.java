@@ -44,23 +44,28 @@ public class Hard extends JFrame implements Game {
         setLocationRelativeTo(null);
 
         // Cria a Cobra
-        cobra = new Cobra(20, 20, Color.BLACK);
+        cobra = new Cobra(20, 20, new Color(31, 117, 0));
         cobra.setX(larguraTabuleiro / 2);
         cobra.setY(alturaTabuleiro / 2);
 
         // Cria a Comida e coloca em uma posição aleatoria
-        comida = new Comida(20, 20, Color.red);
+        comida = new Comida(20, 20, Color.red.darker());
         comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
 
         ///////////////////////////////////////////// Menu /////////////////////////////////////////////////////////
 
         menu = new JPanel();
         menu.setLayout(new FlowLayout());
+        menu.setBackground(new Color(173, 216, 230));
+
+
         JButton resetButton = new JButton("Restart");
         resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton pauseButton = new JButton("Pause");
         pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         placarField = new JTextField("Score: 0", 10);
+        placarField.setOpaque(false);
+        placarField.setBorder(null); 
         placarField.setEditable(false);
 
         menu.add(resetButton);
@@ -80,6 +85,11 @@ public class Hard extends JFrame implements Game {
                 // Desenha somente a Cabeça da Cobra
                 g.setColor(cobra.getCor());
                 g.fillRect(cobra.getX(), cobra.getY(), cobra.getAltura(), cobra.getLargura());
+
+                // Desenha os olhos da cobra
+                desenharOlhos(g, cobra.getX(), cobra.getY());
+
+                g.setColor(cobra.getCor());
 
                 // Desenha o corpo
                 for (Cobra corpoCobra : cobra.getCorpo()) {
@@ -326,9 +336,9 @@ public class Hard extends JFrame implements Game {
         for (int i = 0; i < larguraTabuleiro / quadradoXadrez; i++) {
             for (int j = 0; j < alturaTabuleiro / quadradoXadrez; j++) {
                 if ((i + j) % 2 == 0) {
-                    g.setColor(Color.GREEN.brighter());
+                    g.setColor(new Color(173, 216, 230));
                 } else {
-                    g.setColor(Color.GREEN.darker());
+                    g.setColor(new Color(240, 248, 255));
                 }
                 g.fillRect(i * quadradoXadrez, j * quadradoXadrez, quadradoXadrez, quadradoXadrez);
             }
@@ -346,6 +356,28 @@ public class Hard extends JFrame implements Game {
             e.printStackTrace();
             return new Font("Arial", Font.BOLD, 15); // Fonte padrão se falhar ao carregar
         }
+    }
+
+    // Método para desenhar os olhos da cobra
+    private void desenharOlhos(Graphics g, int x, int y) {
+        // Coordenadas dos olhos
+        int olhoLadoX = x + 5; // Ajuste conforme necessário
+        int olhoLadoY = y + 5; // Ajuste conforme necessário
+        int olhoTamanho = 5; // Tamanho dos olhos
+
+        // Desenha o olho esquerdo
+        g.setColor(Color.WHITE); // Cor do olho
+        g.fillOval(olhoLadoX - olhoTamanho, olhoLadoY - olhoTamanho, olhoTamanho * 2, olhoTamanho * 2);
+
+        // Desenha o olho direito
+        g.fillOval(olhoLadoX + 5, olhoLadoY - olhoTamanho, olhoTamanho * 2, olhoTamanho * 2);
+
+        // Desenha a pupila esquerda
+        g.setColor(Color.BLACK); // Cor da pupila
+        g.fillOval(olhoLadoX - olhoTamanho / 2 - 1, olhoLadoY - olhoTamanho / 2 - 1, olhoTamanho, olhoTamanho);
+
+        // Desenha a pupila direita
+        g.fillOval(olhoLadoX + 10 - olhoTamanho / 2 - 1, olhoLadoY - olhoTamanho / 2 - 1, olhoTamanho, olhoTamanho);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
