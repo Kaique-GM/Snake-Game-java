@@ -55,6 +55,9 @@ public class Hard extends JFrame implements Game {
         comida = new Comida(20, 20, Color.red.darker());
         comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
 
+        sound.loadAndPlayMusic("resources/sounds/hard.wav");
+        sound.playMusicInLoop();
+
         ///////////////////////////////////////////// Menu /////////////////////////////////////////////////////////
 
         menu = new JPanel();
@@ -181,6 +184,7 @@ public class Hard extends JFrame implements Game {
     @Override
     // Método para voltar para Home
     public void Home() {
+        sound.stopMusic();
         dispose();
         sound.stopMusic(); // Para a Musica 
         new TelaInicial();
@@ -228,6 +232,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setX(cobra.getX() - incremento);
                         if (cobra.getX() < 0) {
                             rodando = false;
+                            sound.stopMusic();
                             sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
@@ -236,6 +241,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setX(cobra.getX() + incremento);
                         if (cobra.getX() >= larguraTabuleiro) {
                             rodando = false;
+                            sound.stopMusic();
                             sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
@@ -244,6 +250,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setY(cobra.getY() - incremento);
                         if (cobra.getY() < 0) {
                             rodando = false;
+                            sound.stopMusic();
                             sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
@@ -252,6 +259,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setY(cobra.getY() + incremento);
                         if (cobra.getY() >= alturaTabuleiro) {
                             rodando = false;
+                            sound.stopMusic();
                             sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
@@ -261,6 +269,7 @@ public class Hard extends JFrame implements Game {
                 // Verifica se houve colisão da cabeça com o corpo
                 if (cobra.colisao()) {
                     rodando = false;
+                    sound.stopMusic();
                     sound.playSoundEffect("resources/sounds/death.wav");
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
@@ -313,6 +322,8 @@ public class Hard extends JFrame implements Game {
 
         // Reinicializa a direção
         direcao = "direita";
+
+        sound.playMusicInLoop(); // Reinicia a musica
 
         Play();
 
