@@ -8,7 +8,7 @@ import ui.mode.Hard;
 import ui.mode.Medium;
 import ui.utils.BackgroundPanel;
 import ui.utils.ShadowLabel;
-
+import ui.utils.SoundManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +16,8 @@ import java.io.IOException;
 public class TelaInicial extends JFrame {
 
     private int larguraTabuleiro, alturaTabuleiro;
+
+    SoundManager sound = new SoundManager();
 
     public TelaInicial() {
         // Tamanho da tela
@@ -28,6 +30,9 @@ public class TelaInicial extends JFrame {
         setLocationRelativeTo(null); // Centraliza
         setLayout(new BorderLayout());
 
+        // Musica de Fundo
+        sound.loadAndPlayMusic("resources/sounds/home.wav"); 
+        sound.playMusicInLoop();
 
         ////////////////////////////////////////// Background /////////////////////////////////////////////////////
 
@@ -103,16 +108,19 @@ public class TelaInicial extends JFrame {
 
         // ActionListener para o "botão 1"
         easyButton.addActionListener(e -> {
+            sound.stopMusic(); // Para a Musica 
             new Easy();
             dispose();
         });
 
         mediumButton.addActionListener(e -> {
+            sound.stopMusic(); // Para a Musica 
             new Medium();
             dispose();
         });
 
         hardButton.addActionListener(e -> {
+            sound.stopMusic(); // Para a Musica 
             new Hard();
             dispose();
         });

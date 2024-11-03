@@ -5,6 +5,7 @@ import javax.swing.*;
 import entities.Cobra;
 import entities.Comida;
 import ui.utils.Game;
+import ui.utils.SoundManager;
 import ui.views.TelaDerrota;
 import ui.views.TelaInicial;
 import ui.views.TelaPause;
@@ -32,7 +33,12 @@ public class Easy extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
+    SoundManager sound = new SoundManager();
+
     public Easy() {
+
+        sound.loadAndPlayMusic("resources/sounds/easy.wav");
+        sound.playMusicInLoop();
 
         larguraTabuleiro = alturaTabuleiro = 400;
         quadradoXadrez = 20;
@@ -64,7 +70,7 @@ public class Easy extends JFrame implements Game {
         pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
-        placarField.setBorder(null); 
+        placarField.setBorder(null);
         placarField.setEditable(false);
 
         menu.add(resetButton);
@@ -150,7 +156,12 @@ public class Easy extends JFrame implements Game {
                             direcao = "baixo";
                         }
                         break;
-
+                    case KeyEvent.VK_P:
+                        Pausar();
+                        break;
+                    case KeyEvent.VK_R:
+                        Reiniciar();
+                        break;
                 }
             }
         });
@@ -171,7 +182,9 @@ public class Easy extends JFrame implements Game {
     // Método para voltar para Home
     @Override
     public void Home() {
+        sound.stopMusic();
         dispose();
+        
         new TelaInicial();
     }
 
@@ -242,12 +255,17 @@ public class Easy extends JFrame implements Game {
                 // Verifica se houve colisão da cabeça com o corpo
                 if (cobra.colisao()) {
                     rodando = false;
+
+                    sound.stopMusic(); // Para a musica de fundo
+                    sound.playSoundEffect("resources/sounds/death.wav");
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
                     placarField.setText("Score: " + placar);
+
+                    sound.playSoundEffect("resources/sounds/eat.wav");
 
                     cobra.crescimentoCobra();
                     comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
@@ -288,6 +306,7 @@ public class Easy extends JFrame implements Game {
         // Reinicializa a direção
         direcao = "direita";
 
+        sound.playMusicInLoop(); // Reinicia a musica
         Play();
 
         tabuleiro.requestFocusInWindow();

@@ -3,6 +3,7 @@ package entities;
 import java.awt.Color;
 import java.util.Random;
 
+
 public class Comida extends Quadrado {
 
     private Random random;

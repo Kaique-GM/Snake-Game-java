@@ -5,6 +5,7 @@ import javax.swing.*;
 import entities.Cobra;
 import entities.Comida;
 import ui.utils.Game;
+import ui.utils.SoundManager;
 import ui.views.TelaDerrota;
 import ui.views.TelaInicial;
 import ui.views.TelaPause;
@@ -32,6 +33,8 @@ public class Hard extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
+    SoundManager sound = new SoundManager(); // Para ler Musicas
+
     public Hard() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
@@ -58,14 +61,13 @@ public class Hard extends JFrame implements Game {
         menu.setLayout(new FlowLayout());
         menu.setBackground(new Color(173, 216, 230));
 
-
         JButton resetButton = new JButton("Restart");
         resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         JButton pauseButton = new JButton("Pause");
         pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
-        placarField.setBorder(null); 
+        placarField.setBorder(null);
         placarField.setEditable(false);
 
         menu.add(resetButton);
@@ -152,6 +154,12 @@ public class Hard extends JFrame implements Game {
                             direcao = "baixo";
                         }
                         break;
+                    case KeyEvent.VK_P:
+                        Pausar();
+                        break;
+                    case KeyEvent.VK_R:
+                        Reiniciar();
+                        break;
 
                 }
             }
@@ -174,6 +182,7 @@ public class Hard extends JFrame implements Game {
     // Método para voltar para Home
     public void Home() {
         dispose();
+        sound.stopMusic(); // Para a Musica 
         new TelaInicial();
     }
 
@@ -219,6 +228,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setX(cobra.getX() - incremento);
                         if (cobra.getX() < 0) {
                             rodando = false;
+                            sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -226,6 +236,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setX(cobra.getX() + incremento);
                         if (cobra.getX() >= larguraTabuleiro) {
                             rodando = false;
+                            sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -233,6 +244,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setY(cobra.getY() - incremento);
                         if (cobra.getY() < 0) {
                             rodando = false;
+                            sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -240,6 +252,7 @@ public class Hard extends JFrame implements Game {
                         cobra.setY(cobra.getY() + incremento);
                         if (cobra.getY() >= alturaTabuleiro) {
                             rodando = false;
+                            sound.playSoundEffect("resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -248,11 +261,13 @@ public class Hard extends JFrame implements Game {
                 // Verifica se houve colisão da cabeça com o corpo
                 if (cobra.colisao()) {
                     rodando = false;
+                    sound.playSoundEffect("resources/sounds/death.wav");
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
+                    sound.playSoundEffect("resources/sounds/eat.wav");
                     placarField.setText("Score: " + placar);
 
                     tempoAtualizacao -= 2;
