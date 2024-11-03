@@ -40,6 +40,8 @@ Snake Game é um jogo simples e divertido que desafia os jogadores a controlar u
   - **Hard**: A velocidade aumenta ao comer, e você perde se colidir com o corpo ou as paredes.
 - **Controles**:
    - Use as teclas de seta **(↑, ↓, ←, →)** ou **(W, A , S ,D)** para mover a cobra.
+   - Pressione **P** para pausar o jogo.
+   - Pressione **R** para reiniciar o jogo.
    - Use os botões **Pause** e **Restart** na interface para controlar o jogo.
 
 ## 🎯 Objetivo do Jogo

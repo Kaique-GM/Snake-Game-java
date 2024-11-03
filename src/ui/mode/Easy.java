@@ -44,7 +44,7 @@ public class Easy extends JFrame implements Game {
         quadradoXadrez = 20;
 
         // Configurações
-        setTitle("Sanek Game");
+        setTitle("Snake Game");
         setSize(alturaTabuleiro + 14, alturaTabuleiro + 80);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
