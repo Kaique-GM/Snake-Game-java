@@ -33,14 +33,17 @@ public class Easy extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
+    // Objeto para manipular a música
     SoundManager sound = new SoundManager();
 
     public Easy() {
 
+        // Música de fundo
         sound.loadAndPlayMusic("resources/sounds/easy.wav");
         sound.playMusicInLoop();
 
         larguraTabuleiro = alturaTabuleiro = 400;
+        // tamanho de cada quadrado
         quadradoXadrez = 20;
 
         // Configurações
@@ -65,9 +68,9 @@ public class Easy extends JFrame implements Game {
         menu.setBackground(new Color(255, 224, 126));
 
         JButton resetButton = new JButton("Restart");
-        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte para as letras
         JButton pauseButton = new JButton("Pause");
-        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte para as letras
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
         placarField.setBorder(null);
@@ -85,6 +88,7 @@ public class Easy extends JFrame implements Game {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                // Desenha em o tabuleiro em xadrez
                 colorirTabuleiro(g);
 
                 // Desenha somente a Cabeça da Cobra
@@ -112,6 +116,7 @@ public class Easy extends JFrame implements Game {
 
         setVisible(true);
 
+        // abre a tela para dar inicio ao jogo
         abrirTelaPlay();
 
         //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
@@ -174,7 +179,8 @@ public class Easy extends JFrame implements Game {
     }
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
-
+    
+    // Método para abrir a tela de dar início ao jogo
     private void abrirTelaPlay() {
         new TelaPlay(this);
     }
@@ -184,7 +190,7 @@ public class Easy extends JFrame implements Game {
     public void Home() {
         sound.stopMusic();
         dispose();
-        
+
         new TelaInicial();
     }
 
@@ -257,7 +263,7 @@ public class Easy extends JFrame implements Game {
                     rodando = false;
 
                     sound.stopMusic(); // Para a musica de fundo
-                    sound.playSoundEffect("resources/sounds/death.wav");
+                    sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida

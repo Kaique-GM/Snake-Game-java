@@ -38,6 +38,7 @@ public class Hard extends JFrame implements Game {
     public Hard() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
+        // Tamanho de cada quadrado do xadrez
         quadradoXadrez = 20;
 
         // Configurações
@@ -55,7 +56,7 @@ public class Hard extends JFrame implements Game {
         comida = new Comida(20, 20, Color.red.darker());
         comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
 
-        sound.loadAndPlayMusic("resources/sounds/hard.wav");
+        sound.loadAndPlayMusic("resources/sounds/hard.wav"); // Toca a música de fundo 
         sound.playMusicInLoop();
 
         ///////////////////////////////////////////// Menu /////////////////////////////////////////////////////////
@@ -113,6 +114,7 @@ public class Hard extends JFrame implements Game {
 
         setVisible(true);
 
+        // Abre a tela para dar inicio ao jogo
         abrirTelaPlay();
 
         //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
@@ -177,6 +179,7 @@ public class Hard extends JFrame implements Game {
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
 
+    // Abre a tela para dar inicio ao jogo
     private void abrirTelaPlay() {
         new TelaPlay(this);
     }
@@ -233,7 +236,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getX() < 0) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -242,7 +245,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getX() >= larguraTabuleiro) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -251,7 +254,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getY() < 0) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -260,7 +263,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getY() >= alturaTabuleiro) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -270,17 +273,17 @@ public class Hard extends JFrame implements Game {
                 if (cobra.colisao()) {
                     rodando = false;
                     sound.stopMusic();
-                    sound.playSoundEffect("resources/sounds/death.wav");
+                    sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
-                    sound.playSoundEffect("resources/sounds/eat.wav");
+                    sound.playSoundEffect("resources/sounds/eat.wav"); // Toca o som quando a cobra come a comida
                     placarField.setText("Score: " + placar);
 
-                    tempoAtualizacao -= 2;
-                    if (tempoAtualizacao < 50) {
+                    tempoAtualizacao -= 2; // Aumenta a velocidade da cobra
+                    if (tempoAtualizacao < 50) { // limitador de velocidade
                         tempoAtualizacao = 50;
                     }
 

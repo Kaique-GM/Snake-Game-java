@@ -46,8 +46,8 @@ public class SoundManager {
             clip.start();
         }
     }
-
-    public void stopMusic() {
+ 
+    public void stopMusic() { // Para a música
         if (clip != null && clip.isRunning()) {
             clip.stop();
         }

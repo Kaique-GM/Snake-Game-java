@@ -33,11 +33,12 @@ public class Medium extends JFrame implements Game {
     private boolean rodando;
     private boolean jogoPausado;
 
-    SoundManager sound = new SoundManager();
+    SoundManager sound = new SoundManager(); // Objeto para manipular músicas
 
     public Medium() {
 
         larguraTabuleiro = alturaTabuleiro = 400;
+        // tamanho de cada quadrado do xadrez
         quadradoXadrez = 20;
 
         // Configurações
@@ -65,9 +66,9 @@ public class Medium extends JFrame implements Game {
         menu.setBackground(new Color(34, 139, 34));
 
         JButton resetButton = new JButton("Restart");
-        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte das letras
         JButton pauseButton = new JButton("Pause");
-        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte das letras
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
         placarField.setBorder(null);
@@ -111,7 +112,7 @@ public class Medium extends JFrame implements Game {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         setVisible(true);
-
+        
         abrirTelaPlay();
 
         //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
