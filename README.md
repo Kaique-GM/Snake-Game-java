@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img src="resources/img/TelaInicial.png" alt="Tela inicial" height="400
+<img src="./src/resources/img/TelaInicial.png" alt="Tela inicial" height="400
 "/>
 
 </div>>
@@ -24,13 +24,13 @@ Snake Game é um jogo simples e divertido que desafia os jogadores a controlar u
 ## 🕹️ Imagens do Jogo  
 
 - <strong>Modo Easy (Temática Praiana) 🏖️</strong>
-<div align="center"> <img src="resources/img/easyMode.png" alt="Modo Easy" height="300" /> </div>
+<div align="center"> <img src="./src/resources/img/easyMode.png" alt="Modo Easy" height="300" /> </div>
 
 - <strong>Modo Medium (Temática Florestal) 🌳🌳</strong>
-<div align="center"> <img src="resources/img/mediumMode.png" alt="Modo Medium" height="300" /> </div>
+<div align="center"> <img src="./src/resources/img/mediumMode.png" alt="Modo Medium" height="300" /> </div>
 
 <strong>Modo Hard (Temática Gelo) ❄️</strong>
-<div align="center"> <img src="resources/img/hardMode.png" alt="Modo Hard" height="300" /> </div> 
+<div align="center"> <img src="./src/resources/img/hardMode.png" alt="Modo Hard" height="300" /> </div> 
 
 ## 🎮 Como Jogar
 - **Inicie o Jogo**: Execute o arquivo `SnakeGame.jar` para começar.
