@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Easy extends JFrame implements Game {
 
@@ -39,7 +40,7 @@ public class Easy extends JFrame implements Game {
     public Easy() {
 
         // Música de fundo
-        sound.loadAndPlayMusic("resources/sounds/easy.wav");
+        sound.loadAndPlayMusic("/resources/sounds/easy.wav");
         sound.playMusicInLoop();
 
         larguraTabuleiro = alturaTabuleiro = 400;
@@ -68,9 +69,9 @@ public class Easy extends JFrame implements Game {
         menu.setBackground(new Color(255, 224, 126));
 
         JButton resetButton = new JButton("Restart");
-        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte para as letras
+        resetButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20)); // Fonte para as letras
         JButton pauseButton = new JButton("Pause");
-        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte para as letras
+        pauseButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20)); // Fonte para as letras
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
         placarField.setBorder(null);
@@ -179,7 +180,7 @@ public class Easy extends JFrame implements Game {
     }
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
-    
+
     // Método para abrir a tela de dar início ao jogo
     private void abrirTelaPlay() {
         new TelaPlay(this);
@@ -263,7 +264,7 @@ public class Easy extends JFrame implements Game {
                     rodando = false;
 
                     sound.stopMusic(); // Para a musica de fundo
-                    sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
+                    sound.playSoundEffect("/resources/sounds/death.wav"); // Toca a música de morte
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida
@@ -271,7 +272,7 @@ public class Easy extends JFrame implements Game {
                     placar++;
                     placarField.setText("Score: " + placar);
 
-                    sound.playSoundEffect("resources/sounds/eat.wav");
+                    sound.playSoundEffect("/resources/sounds/eat.wav");
 
                     cobra.crescimentoCobra();
                     comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
@@ -359,10 +360,12 @@ public class Easy extends JFrame implements Game {
         }
     }
 
-    // Método para ler a fonte
+    // Método para ler a fonte de dentro do .jar
     private static Font loadFont(String path, float size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            // Carrega a fonte usando o getResourceAsStream para encontrar a fonte no pacote
+            InputStream is = TelaInicial.class.getResourceAsStream(path);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             return font.deriveFont(size); // Retorna a fonte com o tamanho especificado

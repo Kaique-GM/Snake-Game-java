@@ -1,8 +1,7 @@
 package ui.utils;
 
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.net.URL;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -10,11 +9,11 @@ import javax.swing.*;
 public class BackgroundPanel extends JPanel {
     private Image backgroundImage;
 
-    public BackgroundPanel(String imagePath) {
-        try {
-            backgroundImage = ImageIO.read(new File(imagePath));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public BackgroundPanel(URL imageUrl) {
+        if (imageUrl != null) {
+            backgroundImage = new ImageIcon(imageUrl).getImage();
+        } else {
+            System.out.println("Imagem não encontrada");
         }
     }
 

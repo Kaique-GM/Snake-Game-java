@@ -10,8 +10,8 @@ import ui.utils.BackgroundPanel;
 import ui.utils.ShadowLabel;
 import ui.utils.SoundManager;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class TelaInicial extends JFrame {
 
@@ -31,13 +31,13 @@ public class TelaInicial extends JFrame {
         setLayout(new BorderLayout());
 
         // Musica de Fundo
-        sound.loadAndPlayMusic("resources/sounds/home.wav"); 
+        sound.loadAndPlayMusic("/resources/sounds/home.wav");
         sound.playMusicInLoop();
 
         ////////////////////////////////////////// Background /////////////////////////////////////////////////////
 
         // Cria o painel de fundo
-        BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/Background.jpeg");
+        BackgroundPanel backgroundPanel = new BackgroundPanel(getClass().getResource("/resources/img/Background.jpeg"));
         setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ public class TelaInicial extends JFrame {
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 80, 0)); // Adiciona espaço no topo
         ShadowLabel titulo = new ShadowLabel("Snake Game", JLabel.CENTER);
-        titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
+        titulo.setFont(loadFont("/resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
         titulo.setForeground(Color.white);
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
@@ -70,13 +70,13 @@ public class TelaInicial extends JFrame {
 
         // Cria os botões
         JButton easyButton = new JButton("Easy");
-        easyButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        easyButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         JButton mediumButton = new JButton("Medium");
-        mediumButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        mediumButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         JButton hardButton = new JButton("Hard");
-        hardButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        hardButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         JButton sairButton = new JButton("Exit");
-        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        sairButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
@@ -108,19 +108,19 @@ public class TelaInicial extends JFrame {
 
         // ActionListener para o "botão 1"
         easyButton.addActionListener(e -> {
-            sound.stopMusic(); // Para a Musica 
+            sound.stopMusic(); // Para a Musica
             new Easy();
             dispose();
         });
 
         mediumButton.addActionListener(e -> {
-            sound.stopMusic(); // Para a Musica 
+            sound.stopMusic(); // Para a Musica
             new Medium();
             dispose();
         });
 
         hardButton.addActionListener(e -> {
-            sound.stopMusic(); // Para a Musica 
+            sound.stopMusic(); // Para a Musica
             new Hard();
             dispose();
         });
@@ -137,10 +137,12 @@ public class TelaInicial extends JFrame {
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
 
-    // Método para ler a fonte
+    // Método para ler a fonte de dentro do .jar
     private static Font loadFont(String path, float size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            // Carrega a fonte usando o getResourceAsStream para encontrar a fonte no pacote
+            InputStream is = TelaInicial.class.getResourceAsStream(path);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             return font.deriveFont(size); // Retorna a fonte com o tamanho especificado

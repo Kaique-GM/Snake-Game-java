@@ -1,8 +1,10 @@
 package ui.utils;
 
 import javax.sound.sampled.*;
-import java.io.File;
+
+import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class SoundManager {
 
@@ -11,31 +13,39 @@ public class SoundManager {
     // Método para carregar e tocar sons curtos
     public void playSoundEffect(String filePath) {
         try {
-            File audioFile = new File(filePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            InputStream audioSrc = getClass().getResourceAsStream(filePath);
+            if (audioSrc == null) {
+                System.out.println("Efeito sonoro não encontrado: " + filePath);
+                return;
+            }
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(audioSrc));
             Clip soundEffect = AudioSystem.getClip();
             soundEffect.open(audioStream);
-
-
             soundEffect.start();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    // Método para carregar e tocar música em loop
-    public void loadAndPlayMusic(String filePath) {
+    // Carregar e tocar a música de fundo
+    public void loadAndPlayMusic(String path) {
         try {
-            File audioFile = new File(filePath);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            clip = AudioSystem.getClip();
+            // Carrega o som usando getResourceAsStream
+            InputStream audioSrc = getClass().getResourceAsStream(path);
+            if (audioSrc == null) {
+                System.out.println("Música não encontrada: " + path);
+                return;
+            }
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(audioSrc));
+            clip = AudioSystem.getClip(); // Usa o clip da variável de classe
             clip.open(audioStream);
 
-            // Ajusta o volume
-            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-            volumeControl.setValue(-20.0f); // Reduz o volume em decibéis (dB).
-
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+             // Ajusta o volume
+             FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+             volumeControl.setValue(-10.0f); // Reduz o volume em decibéis (dB).
+             
+            clip.start();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -46,7 +56,7 @@ public class SoundManager {
             clip.start();
         }
     }
- 
+
     public void stopMusic() { // Para a música
         if (clip != null && clip.isRunning()) {
             clip.stop();

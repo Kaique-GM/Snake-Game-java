@@ -16,6 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Hard extends JFrame implements Game {
 
@@ -56,7 +57,7 @@ public class Hard extends JFrame implements Game {
         comida = new Comida(20, 20, Color.red.darker());
         comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
 
-        sound.loadAndPlayMusic("resources/sounds/hard.wav"); // Toca a música de fundo 
+        sound.loadAndPlayMusic("/resources/sounds/hard.wav"); // Toca a música de fundo
         sound.playMusicInLoop();
 
         ///////////////////////////////////////////// Menu /////////////////////////////////////////////////////////
@@ -66,9 +67,9 @@ public class Hard extends JFrame implements Game {
         menu.setBackground(new Color(173, 216, 230));
 
         JButton resetButton = new JButton("Restart");
-        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        resetButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         JButton pauseButton = new JButton("Pause");
-        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        pauseButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
         placarField.setBorder(null);
@@ -189,7 +190,7 @@ public class Hard extends JFrame implements Game {
     public void Home() {
         sound.stopMusic();
         dispose();
-        sound.stopMusic(); // Para a Musica 
+        sound.stopMusic(); // Para a Musica
         new TelaInicial();
     }
 
@@ -236,7 +237,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getX() < 0) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
+                            sound.playSoundEffect("/resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -245,7 +246,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getX() >= larguraTabuleiro) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
+                            sound.playSoundEffect("/resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -254,7 +255,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getY() < 0) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
+                            sound.playSoundEffect("/resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -263,7 +264,7 @@ public class Hard extends JFrame implements Game {
                         if (cobra.getY() >= alturaTabuleiro) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
+                            sound.playSoundEffect("/resources/sounds/death.wav"); // Toca a música de morte
                             new TelaDerrota(this);
                         }
                         break;
@@ -273,13 +274,13 @@ public class Hard extends JFrame implements Game {
                 if (cobra.colisao()) {
                     rodando = false;
                     sound.stopMusic();
-                    sound.playSoundEffect("resources/sounds/death.wav"); // Toca a música de morte
+                    sound.playSoundEffect("/resources/sounds/death.wav"); // Toca a música de morte
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida
                 if (cobra.comeuComida(comida)) {
                     placar++;
-                    sound.playSoundEffect("resources/sounds/eat.wav"); // Toca o som quando a cobra come a comida
+                    sound.playSoundEffect("/resources/sounds/eat.wav"); // Toca o som quando a cobra come a comida
                     placarField.setText("Score: " + placar);
 
                     tempoAtualizacao -= 2; // Aumenta a velocidade da cobra
@@ -377,7 +378,9 @@ public class Hard extends JFrame implements Game {
     // Método para ler a fonte
     private static Font loadFont(String path, float size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            // Carrega a fonte usando o getResourceAsStream para encontrar a fonte no pacote
+            InputStream is = TelaInicial.class.getResourceAsStream(path);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             return font.deriveFont(size); // Retorna a fonte com o tamanho especificado

@@ -14,8 +14,8 @@ import ui.views.TelaPlay;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class Medium extends JFrame implements Game {
 
@@ -56,7 +56,7 @@ public class Medium extends JFrame implements Game {
         comida = new Comida(20, 20, Color.red.darker());
         comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
 
-        sound.loadAndPlayMusic("resources/sounds/medium.wav");
+        sound.loadAndPlayMusic("/resources/sounds/medium.wav");
         sound.playMusicInLoop();
 
         ///////////////////////////////////////////// Menu /////////////////////////////////////////////////////////
@@ -66,9 +66,9 @@ public class Medium extends JFrame implements Game {
         menu.setBackground(new Color(34, 139, 34));
 
         JButton resetButton = new JButton("Restart");
-        resetButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte das letras
+        resetButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20)); // Fonte das letras
         JButton pauseButton = new JButton("Pause");
-        pauseButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20)); // Fonte das letras
+        pauseButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20)); // Fonte das letras
         placarField = new JTextField("Score: 0", 10);
         placarField.setOpaque(false);
         placarField.setBorder(null);
@@ -112,7 +112,7 @@ public class Medium extends JFrame implements Game {
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         setVisible(true);
-        
+
         abrirTelaPlay();
 
         //////////////////////////////////////// Funções dos Botões //////////////////////////////////////////////
@@ -232,7 +232,7 @@ public class Medium extends JFrame implements Game {
                         if (cobra.getX() < 0) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("/resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -241,7 +241,7 @@ public class Medium extends JFrame implements Game {
                         if (cobra.getX() >= larguraTabuleiro) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("/resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -250,7 +250,7 @@ public class Medium extends JFrame implements Game {
                         if (cobra.getY() < 0) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("/resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -259,7 +259,7 @@ public class Medium extends JFrame implements Game {
                         if (cobra.getY() >= alturaTabuleiro) {
                             rodando = false;
                             sound.stopMusic();
-                            sound.playSoundEffect("resources/sounds/death.wav");
+                            sound.playSoundEffect("/resources/sounds/death.wav");
                             new TelaDerrota(this);
                         }
                         break;
@@ -269,7 +269,7 @@ public class Medium extends JFrame implements Game {
                 if (cobra.colisao()) {
                     rodando = false;
                     sound.stopMusic();
-                    sound.playSoundEffect("resources/sounds/death.wav");
+                    sound.playSoundEffect("/resources/sounds/death.wav");
                     new TelaDerrota(this); // chama a tela reiniciar desse modo de jogo
                 }
                 // Verifica se a Cobra passou por cima da comida
@@ -277,7 +277,7 @@ public class Medium extends JFrame implements Game {
                     placar++;
                     placarField.setText("Score: " + placar);
 
-                    sound.playSoundEffect("resources/sounds/eat.wav");
+                    sound.playSoundEffect("/resources/sounds/eat.wav");
 
                     cobra.crescimentoCobra();
                     comida.gerarComida(larguraTabuleiro, alturaTabuleiro, cobra);
@@ -369,7 +369,9 @@ public class Medium extends JFrame implements Game {
     // Método para ler a fonte
     private static Font loadFont(String path, float size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            // Carrega a fonte usando o getResourceAsStream para encontrar a fonte no pacote
+            InputStream is = TelaInicial.class.getResourceAsStream(path);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             return font.deriveFont(size); // Retorna a fonte com o tamanho especificado

@@ -12,6 +12,7 @@ import ui.utils.ShadowLabel;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class TelaPlay extends JFrame {
 
@@ -30,18 +31,18 @@ public class TelaPlay extends JFrame {
         setLayout(new BorderLayout());
 
         ////////////////////////////////////////// Background /////////////////////////////////////////////////////
-        
+
         // Verifica de Qual instancia é o game
         if (game instanceof Easy) {
-            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/easy.jpg");
-            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
-        } 
-        if(game instanceof Medium) {
-            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/medium.jpg");
+            BackgroundPanel backgroundPanel = new BackgroundPanel(getClass().getResource("/resources/img/easy.jpg"));
             setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
         }
-        if(game instanceof Hard) {
-            BackgroundPanel backgroundPanel = new BackgroundPanel("resources/img/hard.jpg");
+        if (game instanceof Medium) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel(getClass().getResource("/resources/img/medium.jpg"));
+            setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
+        }
+        if (game instanceof Hard) {
+            BackgroundPanel backgroundPanel = new BackgroundPanel(getClass().getResource("/resources/img/hard.jpg"));
             setContentPane(backgroundPanel); // Definindo o painel de fundo como o conteúdo da janela
         }
 
@@ -55,7 +56,7 @@ public class TelaPlay extends JFrame {
         painelTitulo.setLayout(new FlowLayout());
         painelTitulo.add(Box.createVerticalStrut(100), BorderLayout.NORTH); // Adiciona espaço
         ShadowLabel titulo = new ShadowLabel("Ready?", JLabel.CENTER);
-        titulo.setFont(loadFont("resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
+        titulo.setFont(loadFont("/resources/fonts/pricedown.ttf", 48)); // Aumenta o tamanho do titulo e troca a fonte
         titulo.setForeground(Color.white); // Aumenta o tamanho do titulo e troca a fonte
         painelTitulo.add(titulo, BorderLayout.NORTH);
         add(painelTitulo, BorderLayout.NORTH);
@@ -75,11 +76,11 @@ public class TelaPlay extends JFrame {
 
         // Cria os botões
         JButton playButton = new JButton("Play");
-        playButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        playButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         JButton homeButton = new JButton("Home");
-        homeButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        homeButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
         JButton sairButton = new JButton("Exit");
-        sairButton.setFont(loadFont("resources/fonts/pricedown.ttf", 20));
+        sairButton.setFont(loadFont("/resources/fonts/pricedown.ttf", 20));
 
         // Define o tamanho dos Botões
         Dimension tamanhoBotao = new Dimension(150, 30);
@@ -128,10 +129,12 @@ public class TelaPlay extends JFrame {
 
     //////////////////////////////////////////// Métodos ///////////////////////////////////////////////////////
 
-    // Método para ler a fonte
+    // Método para ler a fonte de dentro do .jar
     private static Font loadFont(String path, float size) {
         try {
-            Font font = Font.createFont(Font.TRUETYPE_FONT, new File(path));
+            // Carrega a fonte usando o getResourceAsStream para encontrar a fonte no pacote
+            InputStream is = TelaInicial.class.getResourceAsStream(path);
+            Font font = Font.createFont(Font.TRUETYPE_FONT, is);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(font);
             return font.deriveFont(size); // Retorna a fonte com o tamanho especificado
