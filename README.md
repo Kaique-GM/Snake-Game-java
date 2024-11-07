@@ -5,7 +5,7 @@
 <img src="./src/resources/img/TelaInicial.png" alt="Tela inicial" height="400
 "/>
 
-</div>>
+</div>
 
 ## 📝 Descrição
 
